@@ -8,10 +8,10 @@ def test_dark_theme_by_time():
     current_time = time(hour=5)
     # TODO переключите темную тему в зависимости от времени суток (с 22 до 6 часов утра - ночь)
 
-    if current_time.hour in [0,1,2,3,4,5,22,23]:
-        is_dark_theme = True
-    else:
+    if current_time.hour in range(6, 22):
         is_dark_theme = False
+    else:
+        is_dark_theme = True
 
     assert is_dark_theme is True
 
@@ -25,19 +25,17 @@ def test_dark_theme_by_time_and_user_choice():
     dark_theme_enabled_by_user = False - Темная тема выключена
     dark_theme_enabled_by_user = None - Пользователь не сделал выбор (используется переключение по времени системы)
     """
-    current_time = time(hour=4)
-    dark_theme_enabled_by_user = False
+    current_time = time(hour=22)
+    dark_theme_enabled_by_user = None
     # TODO переключите темную тему в зависимости от времени суток,
     #  но учтите что темная тема может быть включена вручную
 
-    if dark_theme_enabled_by_user:
-        is_dark_theme = True
-    elif dark_theme_enabled_by_user == None and current_time.hour in [0,1,2,3,4,5,22,23]:
-        is_dark_theme = True
-    else:
+    if dark_theme_enabled_by_user is False:
         is_dark_theme = False
-
-
+    elif dark_theme_enabled_by_user is None and current_time.hour in range(6, 22):
+        is_dark_theme = False
+    else:
+        is_dark_theme = True
     assert is_dark_theme is True
 
 
@@ -54,6 +52,7 @@ def test_find_suitable_user():
     ]
 
     # TODO найдите пользователя с именем "Olga"
+
 
     for user in users:
             if user["name"] == "Olga":
